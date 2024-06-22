@@ -19,6 +19,8 @@
 		C3B7953D2C2734BF000C3962 /* TemperatureGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7953C2C2734BF000C3962 /* TemperatureGauge.swift */; };
 		C3B7953F2C275339000C3962 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7953E2C275339000C3962 /* DisconnectView.swift */; };
 		C3B795412C2753CC000C3962 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B795402C2753CC000C3962 /* MainView.swift */; };
+		C3B795452C277193000C3962 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C3B795442C277193000C3962 /* .gitignore */; };
+		C3B795472C2771AE000C3962 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C3B795462C2771AE000C3962 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		C3B7953C2C2734BF000C3962 /* TemperatureGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureGauge.swift; sourceTree = "<group>"; };
 		C3B7953E2C275339000C3962 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
 		C3B795402C2753CC000C3962 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		C3B795442C277193000C3962 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		C3B795462C2771AE000C3962 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,8 @@
 				C3B7953C2C2734BF000C3962 /* TemperatureGauge.swift */,
 				C3B795402C2753CC000C3962 /* MainView.swift */,
 				C3B7953E2C275339000C3962 /* DisconnectView.swift */,
+				C3B795442C277193000C3962 /* .gitignore */,
+				C3B795462C2771AE000C3962 /* LICENSE */,
 			);
 			path = "Crafty Watch App";
 			sourceTree = "<group>";
@@ -290,6 +296,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C31863AF2C2701D7003EF4F7 /* Preview Assets.xcassets in Resources */,
+				C3B795452C277193000C3962 /* .gitignore in Resources */,
+				C3B795472C2771AE000C3962 /* LICENSE in Resources */,
 				C31863AC2C2701D7003EF4F7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
