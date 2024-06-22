@@ -3,6 +3,7 @@ import SwiftUI
 struct TemperatureGradient: View {
     @Binding var temperature: Double
     @Binding var targetTemperature: Double
+    @Binding var isHeating: Bool
     
     var body: some View {
         GeometryReader { geometry in
@@ -15,9 +16,9 @@ struct TemperatureGradient: View {
                     .stroke(
                         AngularGradient(
                             gradient: Gradient(colors: [
-                                colorForTemperature(temperature: 0),
-                                colorForTemperature(temperature: temperature),
-                                colorForTemperature(temperature: min(temperature + 0, 210))
+                                colorForTemperature(temperature: 0, isHeating:  isHeating),
+                                colorForTemperature(temperature: temperature, isHeating:  isHeating),
+                                colorForTemperature(temperature: min(temperature + 0, 210), isHeating:  isHeating)
                             ]),
                             center: .center,
                             startAngle: .degrees(0),
@@ -30,7 +31,7 @@ struct TemperatureGradient: View {
                 VStack(spacing: 0) {
                     Text("\(Int(temperature))°C")
                         .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(colorForTemperature(temperature: temperature))
+                        .foregroundColor(colorForTemperature(temperature: temperature, isHeating: isHeating))
                     Text("\(Int(targetTemperature))°C")
                         .font(.system(size: 16, weight: .regular))
                         .foregroundColor(.gray)
@@ -40,7 +41,10 @@ struct TemperatureGradient: View {
         }
     }
     
-    func colorForTemperature(temperature: Double) -> Color {
+    func colorForTemperature(temperature: Double, isHeating: Bool) -> Color {
+        if (!isHeating) {
+            return .gray
+        }
         switch temperature {
         case 0..<160:
             return .yellow

@@ -20,6 +20,8 @@
 		C3B795392C272660000C3962 /* DeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B795382C272660000C3962 /* DeviceListView.swift */; };
 		C3B7953B2C27267D000C3962 /* ConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7953A2C27267D000C3962 /* ConnectedView.swift */; };
 		C3B7953D2C2734BF000C3962 /* TemperatureGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7953C2C2734BF000C3962 /* TemperatureGauge.swift */; };
+		C3B7953F2C275339000C3962 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7953E2C275339000C3962 /* DisconnectView.swift */; };
+		C3B795412C2753CC000C3962 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B795402C2753CC000C3962 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		C3B795382C272660000C3962 /* DeviceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListView.swift; sourceTree = "<group>"; };
 		C3B7953A2C27267D000C3962 /* ConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedView.swift; sourceTree = "<group>"; };
 		C3B7953C2C2734BF000C3962 /* TemperatureGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureGauge.swift; sourceTree = "<group>"; };
+		C3B7953E2C275339000C3962 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
+		C3B795402C2753CC000C3962 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,8 @@
 				C3B795362C272640000C3962 /* HapticFeedback.swift */,
 				C3B795382C272660000C3962 /* DeviceListView.swift */,
 				C3B7953C2C2734BF000C3962 /* TemperatureGauge.swift */,
+				C3B795402C2753CC000C3962 /* MainView.swift */,
+				C3B7953E2C275339000C3962 /* DisconnectView.swift */,
 			);
 			path = "Crafty Watch App";
 			sourceTree = "<group>";
@@ -335,9 +341,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3B7953D2C2734BF000C3962 /* TemperatureGauge.swift in Sources */,
+				C3B795412C2753CC000C3962 /* MainView.swift in Sources */,
 				C31863AA2C2701D6003EF4F7 /* ContentView.swift in Sources */,
 				C3B795372C272640000C3962 /* HapticFeedback.swift in Sources */,
 				C3B7953B2C27267D000C3962 /* ConnectedView.swift in Sources */,
+				C3B7953F2C275339000C3962 /* DisconnectView.swift in Sources */,
 				C3B795392C272660000C3962 /* DeviceListView.swift in Sources */,
 				C31863D62C270245003EF4F7 /* BluetoothManager.swift in Sources */,
 				C31863A82C2701D6003EF4F7 /* CraftyApp.swift in Sources */,

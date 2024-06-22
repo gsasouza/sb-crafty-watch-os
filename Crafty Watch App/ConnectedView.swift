@@ -2,53 +2,81 @@ import SwiftUI
 
 struct ConnectedView: View {
     @ObservedObject var bluetoothManager = BluetoothManager.shared
-    @State private var crownState = 0.0
+    @FocusState private var isFocused: Bool
+    @State private var crownAccumulator: Double = 0
+    @Environment(\.dismiss) private var dismiss
+    
+    
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 10) {
-                // Temperature Display
-                TemperatureGradient(temperature: $bluetoothManager.temperature, targetTemperature: $bluetoothManager.targetTemperature)
-                    .frame(width: geometry.size.width * 0.8, height: geometry.size.width * 0.8)
-                    .focusable()
-                    .digitalCrownRotation(
-                        detent: Binding(
-                            get: { self.crownState },
-                            set: { newValue in
-                                self.crownState = newValue
-                                let newTemp = self.bluetoothManager.targetTemperature + newValue
-                                self.bluetoothManager.targetTemperature = max(40, min(210, newTemp))
-                                self.crownState = 0 // Reset crown value after applying
+            ZStack(alignment: .topLeading) {
+                                             
+                VStack(spacing: 10) {
+                    // Temperature Display
+                    TemperatureGradient(temperature: $bluetoothManager.temperature, targetTemperature: $bluetoothManager.targetTemperature, isHeating: $bluetoothManager.isHeating)
+                        .frame(width: geometry.size.width * 0.8, height: geometry.size.width * 0.8)
+                        .focusable()
+                        .digitalCrownRotation(
+                            $crownAccumulator,
+                            from: -50,
+                            through: 50,
+                            by: 0.1,
+                            sensitivity: .medium,
+                            isContinuous: false,
+                            isHapticFeedbackEnabled: true
+                        )
+                        .focused($isFocused)
+                        .onChange(of: crownAccumulator) { oldValue, newValue in
+                            if isFocused {
+                                let newTemp = bluetoothManager.targetTemperature + newValue
+                                bluetoothManager.targetTemperature = max(160, min(210, newTemp))
+                                crownAccumulator = 0
                             }
-                        ),
-                        from: -30,
-                        through: 30,
-                        by: 0.1,
-                        sensitivity: .medium,
-                        isContinuous: false,
-                        isHapticFeedbackEnabled: true
-                    )
-                // Remaining Time and Battery
-                HStack {
+                        }
+                    // Remaining Time and Battery
+            
                     HStack {
-                        Image(systemName: "timer")
-                        Text("\(bluetoothManager.remainingTime)s")
+                        HStack {
+                            Image(systemName: "timer")
+                            Text("\(bluetoothManager.isConnected ? bluetoothManager.autoOffTime :  bluetoothManager.remainingTime)s")
+                        }
+                        .font(.system(size: 16))
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Text("\(bluetoothManager.battery)%")
+                            Image(systemName: batteryIcon(battery: bluetoothManager.battery))
+                        }
+                        .font(.system(size: 16))
                     }
-                    .font(.system(size: 16))
-                    
-                    Spacer()
-                    
-                    HStack {
-                        Image(systemName: "battery.75")
-                        Text("\(bluetoothManager.battery)%")
-                    }
-                    .font(.system(size: 16))
+                    .foregroundColor(.gray)
                 }
-                .foregroundColor(.gray)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                
             }
-            .frame(width: geometry.size.width, height: geometry.size.height)
+            
+        }.background(Color.black.edgesIgnoringSafeArea(.all))
+        
+    }
+    
+    func batteryIcon(battery: Int) -> String{
+       
+        switch battery {
+        case 0..<10:
+            return "battery.0"
+        case 10...25:
+            return "battery.10"
+        case 25...50:
+            return "battery.25"
+        case 50...75:
+            return "battery.50"
+        case 75...95:
+            return "battery.75"
+        default:
+            return "battery.100"
         }
-        .background(Color.black.edgesIgnoringSafeArea(.all))
     }
 }
 

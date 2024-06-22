@@ -17,10 +17,13 @@ class BluetoothManager: NSObject, ObservableObject {
     @Published var discoveredPeripherals: [CBPeripheral] = []
     @Published var isScanning = false
     @Published var isConnected = false
+    @Published var isHeating = false
     @Published var connectionStatus: ConnectionStatus = .disconnected
+    @Published var currentAutoOffValue: Int = -1
     
     @Published var battery: Int = 0
     @Published var remainingTime: Int = 0
+    @Published var autoOffTime: Int = 0
     @Published var temperature: Double = 0
     
     @Published var targetTemperature: Double = 0 {
@@ -33,9 +36,11 @@ class BluetoothManager: NSObject, ObservableObject {
     private var batteryCharacteristic: CBCharacteristic?
     private var temperatureCharacteristic: CBCharacteristic?
     private var targetTemperatureCharacteristic: CBCharacteristic?
+    private var autoOffCharacteristic: CBCharacteristic?
     private var remainingTimeCharacteristic: CBCharacteristic?
+    private var heaterOnCharacteristic: CBCharacteristic?
+    private var heaterOffCharacteristic: CBCharacteristic?
     
-
        
    enum ConnectionStatus {
        case disconnected
@@ -157,8 +162,14 @@ extension BluetoothManager: CBPeripheralDelegate {
                 temperatureCharacteristic = characteristic
             case "00000021-4C45-4B43-4942-265A524F5453":
                 targetTemperatureCharacteristic = characteristic
+            case "00000061-4C45-4B43-4942-265A524F5453":
+                autoOffCharacteristic = characteristic
             case "00000071-4C45-4B43-4942-265A524F5453":
                 remainingTimeCharacteristic = characteristic
+            case "00000081-4C45-4B43-4942-265A524F5453":
+                heaterOnCharacteristic = characteristic
+            case "00000091-4C45-4B43-4942-265A524F5453":
+                heaterOffCharacteristic = characteristic
             default:
                 break
             }
@@ -193,11 +204,29 @@ extension BluetoothManager: CBPeripheralDelegate {
                     let value = self.convertBytes(data)
                     self.targetTemperature = Double(value) / 10.0
                 }
+                
+            case "00000061-4C45-4B43-4942-265A524F5453":
+                if data.count >= 2 {
+                    let value = self.convertBytes(data)
+                    self.autoOffTime = Int(value)
+                    print("00000061-4C45-4B43-4942-265A524F5453 \(self.autoOffTime)")
+                }
+                
             case "00000071-4C45-4B43-4942-265A524F5453": // Remaining Time
                 if data.count >= 2 {
                     let value = self.convertBytes(data)
                     self.remainingTime = Int(value)
+                    print("00000071-4C45-4B43-4942-265A524F5453 \(self.remainingTime)")
                 }
+      
+            case "00000093-4C45-4B43-4942-265A524F5453":
+                if data.count >= 2 {
+                    let value = self.convertBytes(data)
+                    self.isHeating = Int(value) == 1045 ? true : false
+                    
+                }
+           
+                           
             default:
                 print("Unhandled characteristic: \(characteristic.uuid.uuidString)")
                 break

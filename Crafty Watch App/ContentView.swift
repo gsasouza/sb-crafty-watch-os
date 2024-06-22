@@ -19,7 +19,7 @@ struct ContentView: View {
         case .connecting:
             ProgressView("Connecting...")
         case .connected:
-            ConnectedView()
+            MainView()
         case .invalidDevice:
             Text("Invalid device. Please select a compatible device.")
                 .onAppear {
@@ -38,8 +38,4 @@ struct SettingsView: View {
             Toggle("Notifications", isOn: .constant(true)) // Replace with actual state
         }
     }
-}
-
-#Preview {
-    ConnectedView()
 }
