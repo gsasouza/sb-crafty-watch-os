@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         switch bluetoothManager.connectionStatus {
         case .disconnected:
-            DeviceListView()
+            DeviceListView(bluetoothManager: bluetoothManager)
         case .connecting:
             ProgressView("Connecting...")
         case .connected:

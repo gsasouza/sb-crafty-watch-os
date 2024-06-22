@@ -39,7 +39,7 @@ struct ConnectedView: View {
                     HStack {
                         HStack {
                             Image(systemName: "timer")
-                            Text("\(bluetoothManager.isConnected ? bluetoothManager.autoOffTime :  bluetoothManager.remainingTime)s")
+                            Text("\(bluetoothManager.isConnected ? bluetoothManager.remainingTime :  bluetoothManager.autoOffTime)s")
                         }
                         .font(.system(size: 16))
                         

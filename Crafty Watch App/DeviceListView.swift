@@ -1,31 +1,59 @@
 import SwiftUI
 
 struct DeviceListView: View {
-    @ObservedObject var bluetoothManager = BluetoothManager.shared
+    @ObservedObject var bluetoothManager: BluetoothManager
     
     var body: some View {
-        List {
-            if bluetoothManager.isScanning {
-                HStack {
-                    ProgressView()
-                    Text("Scanning...")
+        NavigationView {
+            List {
+                ForEach(bluetoothManager.discoveredDevices) { device in
+                    DeviceRowView(device: device, bluetoothManager: bluetoothManager)
                 }
             }
+            .navigationTitle("Devices")
+            .refreshable {
+                bluetoothManager.startScanning()
+            }
+            .overlay(Group {
+                if bluetoothManager.discoveredDevices.isEmpty {
+                    VStack {
+                        ProgressView()
+                        Text("Scanning for devices...")
+                            .foregroundColor(.secondary)
+                    }
+                }
+            })
+        }
+    }
+}
+
+struct DeviceRowView: View {
+    let device: DiscoveredDevice
+    @ObservedObject var bluetoothManager: BluetoothManager
+    
+    var body: some View {
+        HStack {
+           
             
-            ForEach(bluetoothManager.discoveredPeripherals, id: \.identifier) { peripheral in
+            VStack(alignment: .trailing) {
+                
+                
                 Button(action: {
-                    bluetoothManager.connect(to: peripheral)
+                    bluetoothManager.connect(to: device.peripheral)
                 }) {
-                    Text(peripheral.name ?? "Unknown Device")
+                    VStack(alignment: .leading) {
+                        Text(device.name)
+                    }
+                    
+                    Spacer()
+                    
+                    Text(device.rssi.description + " dBm")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
                 }
             }
         }
-        .navigationTitle("Devices")
-        .onAppear {
-            bluetoothManager.startScanning()
-        }
-        .onDisappear {
-            bluetoothManager.stopScanning()
-        }
+        .padding(.vertical, 8)
     }
 }
